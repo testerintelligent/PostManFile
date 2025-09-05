@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "64bd56d3-8237-4504-adb6-b9fe92003090",
+		"name": "React_Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47224437",
+		"_collection_link": "https://dhilip-jaishankar17-8437249.postman.co/workspace/Dhilip's-Workspace~355faa54-bcec-46b1-8ae8-a21e7dd874ca/collection/47224437-64bd56d3-8237-4504-adb6-b9fe92003090?action=share&source=collection_link&creator=47224437"
+	},
+	"item": [
+		{
+			"name": "Get All Trainings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base}}",
+					"host": [
+						"{{base}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Trainee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"trainingId\", jsonData._id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"trainingId is present\", function () {\r",
+							"    pm.expect(jsonData._id).to.not.be.null;\r",
+							"});\r",
+							"pm.test(\"Name is correct\", function () {\r",
+							"    pm.expect(jsonData.employeeName).to.eql(\"Mark\");\r",
+							"});\r",
+							"pm.test(\"Course is correct\", function () {\r",
+							"    pm.expect(jsonData.course).to.eql(\"JavaScript\");\r",
+							"});\r",
+							"pm.test(\"TrainerName is correct\", function () {\r",
+							"    pm.expect(jsonData.trainerName).to.eql(\"Stalin\");\r",
+							"});\r",
+							"pm.test(\"Response time is less than 5ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employeeName\": \"{{employeeName}}\",\r\n  \"course\": \"{{course}}\",\r\n  \"startDate\": \"{{startDate}}\",\r\n  \"endDate\": \"{{endDate}}\",\r\n  \"status\": \"{{status}}\",\r\n  \"trainerName\": \"{{trainerName}}\",\r\n  \"trainingType\": \"{{trainingType}}\",\r\n  \"percentCompleted\": {{percentCompleted}},\r\n  \"projectName\": \"{{projectName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}",
+					"host": [
+						"{{base}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit Trainee",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Employee name is updated\", function () {\r",
+							"    pm.expect(jsonData.employeeName).to.eql(\"MarkAntony\");\r",
+							"});\r",
+							"pm.test(\"Intentional fail - Method is GET\", function () {\r",
+							"    pm.expect(pm.request.method).to.eql(\"GET\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employeeName\": \"MarkAntony\",\r\n    \"course\": \"JavaScript\",\r\n    \"startDate\": \"2025-01-01T00:00:00.000Z\",\r\n    \"endDate\": \"2026-01-01T00:00:00.000Z\",\r\n    \"status\": \"In Progress\",\r\n    \"trainerName\": \"Stalin\",\r\n    \"trainingType\": \"Virtual\",\r\n    \"percentCompleted\": 55,\r\n    \"projectName\": \"EFG\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/{{trainingId}}",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"{{trainingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete Trainee",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/{{trainingId}}",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"{{trainingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employeeName\": \"John\",\r\n        \"course\": \"CSharp\",\r\n        \"startDate\": \"2025-05-17T00:00:00.000Z\",\r\n        \"endDate\": \"2025-05-18T00:00:00.000Z\",\r\n        \"status\": \"In Progress\",\r\n        \"trainerName\": \"efZyFj\",\r\n        \"trainingType\": \"Virtual\",\r\n        \"percentCompleted\": 82,\r\n        \"projectName\": \"HIJ\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base}}",
+					"host": [
+						"{{base}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.globals.set(\"userId\", responseBody._id);\r",
+							"\r",
+							"pm.test(\"employeeName is 'Merlyn'\", function () {\r",
+							"    pm.expect(responseBody.employeeName).to.eql(\"Merlyn\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"course is 'CSharp'\", function () {\r",
+							"    pm.expect(responseBody.course).to.eql(\"CSharp\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \r\n        \"employeeName\": \"Merlyn\",\r\n        \"course\": \"CSharp\",\r\n        \"startDate\": \"2025-01-01T00:00:00.000Z\",\r\n        \"endDate\": \"2026-01-01T00:00:00.000Z\",\r\n        \"status\": \"In Progress\",\r\n        \"trainerName\": \"Stalin\",\r\n        \"trainingType\": \"Virtual\",\r\n        \"percentCompleted\": 55,\r\n        \"projectName\": \"EFG\"\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}",
+					"host": [
+						"{{base}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let putResponse = pm.response.json();\r",
+							"\r",
+							"pm.test(putResponse.employeeName, function () {\r",
+							"    pm.expect(putResponse.employeeName).to.include(\"MerlynHema\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \r\n        \"employeeName\": \"MerlynHema\",\r\n        \"course\": \"CSharp\",\r\n        \"startDate\": \"2025-01-01T00:00:00.000Z\",\r\n        \"endDate\": \"2026-01-01T00:00:00.000Z\",\r\n        \"status\": \"In Progress\",\r\n        \"trainerName\": \"Stalin\",\r\n        \"trainingType\": \"Virtual\",\r\n        \"percentCompleted\": 55,\r\n        \"projectName\": \"EFG\"\r\n        \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base}}/{{userId}}",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 5ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base}}/{{userId}}",
+					"host": [
+						"{{base}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base",
+			"value": "http://10.192.190.130:5000/api/trainings"
+		},
+		{
+			"key": "trainingId",
+			"value": ""
+		}
+	]
+}
