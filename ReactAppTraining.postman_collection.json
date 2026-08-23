@@ -214,7 +214,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://10.192.190.130:5000/api/trainings",
+			"value": "http://10.192.190.158:5002/api/trainings",
 			"type": "string"
 		},
 		{
