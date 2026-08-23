@@ -211,7 +211,7 @@
 	"variable": [
 		{
 			"key": "base",
-			"value": "http://10.192.190.130:5000/api/trainings"
+			"value": "http://10.192.190.158:5002/api/trainings"
 		}
 	]
 }
